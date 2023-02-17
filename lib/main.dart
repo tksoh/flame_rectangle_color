@@ -23,7 +23,7 @@ class PositionMarker extends CircleComponent {
   }
 
   @override
-  Future<void> onLoad() {
+  Future<void>? onLoad() {
     if (lifeSpan != null) {
       add(RemoveEffect(delay: lifeSpan!));
     }
@@ -35,7 +35,7 @@ class Shield extends RectangleComponent with Tappable, HasGameRef<MyGame> {
   Shield();
 
   @override
-  FutureOr<void>? onLoad() {
+  Future<void>? onLoad() {
     size = gameRef.size;
     setColor(Colors.green);
     return super.onLoad();
@@ -67,10 +67,10 @@ void main() {
 
 class MyGame extends FlameGame with HasTappables {
   @override
-  FutureOr<void>? onLoad() {
+  Future<void>? onLoad() {
     add(Shield());
 
-    final version = TextComponent(text: 'Flame 1.6.0')
+    final version = TextComponent(text: 'Flame 1.4.0')
       ..position = Vector2(10, 80);
     add(version);
 
