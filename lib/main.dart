@@ -70,15 +70,8 @@ class MyGame extends FlameGame with HasTappables {
   FutureOr<void>? onLoad() {
     add(Shield());
 
-    final dot = CircleComponent(radius: 50)
-      ..setColor(Colors.blue)
-      ..anchor = Anchor.center
-      ..position = Vector2(size.x / 2, size.y / 2);
-    add(dot);
-
     final version = TextComponent(text: 'Flame 1.6.0')
-      ..anchor = Anchor.center
-      ..position = Vector2(size.x / 2, size.y / 2);
+      ..position = Vector2(10, 80);
     add(version);
 
     return super.onLoad();
