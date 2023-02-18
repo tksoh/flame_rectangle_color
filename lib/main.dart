@@ -6,6 +6,12 @@ import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
+extension ComponentEx on ShapeComponent {
+  Color getColor() {
+    return getPaint().color;
+  }
+}
+
 class PositionMarker extends CircleComponent {
   double? lifeSpan;
 
@@ -36,8 +42,10 @@ class Shield extends RectangleComponent with Tappable, HasGameRef<MyGame> {
 
   @override
   FutureOr<void>? onLoad() {
+    debugPrint('shield: original color = ${getColor()}');
     size = gameRef.size;
     setColor(Colors.green);
+    debugPrint('shield: new color = ${getColor()}');
     return super.onLoad();
   }
 
