@@ -6,6 +6,14 @@ import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
+Color invert(Color color) {
+  final r = 255 - color.red;
+  final g = 255 - color.green;
+  final b = 255 - color.blue;
+
+  return Color.fromARGB((color.opacity * 255).round(), r, g, b);
+}
+
 extension ComponentEx on ShapeComponent {
   Color getColor() {
     return getPaint().color;
@@ -58,6 +66,10 @@ class Shield extends RectangleComponent with Tappable, HasGameRef<MyGame> {
       lifeSpan: 2,
     );
     gameRef.add(marker);
+
+    // toggle shield color
+    setColor(invert(getColor()));
+
     return false; // stop tap event propagation
   }
 
