@@ -68,11 +68,25 @@ void main() {
 class MyGame extends FlameGame with HasTappables {
   @override
   FutureOr<void>? onLoad() {
-    add(Shield());
+    final parent = RectangleComponent(
+      position: Vector2(100, 100),
+      size: Vector2(100, 100),
+      anchor: Anchor.center,
+    )..setColor(Colors.blue);
+    add(parent);
 
-    final version = TextComponent(text: 'Flame 1.6.0')
-      ..position = Vector2(10, 80);
-    add(version);
+    final child = RectangleComponent(
+      position: Vector2(0, 0),
+      size: Vector2(10, 10),
+    )..setColor(Colors.yellow);
+    parent.add(child);
+
+    final child2 = RectangleComponent(
+      position: Vector2(50, 50),
+      size: Vector2(10, 10),
+      anchor: Anchor.center,
+    )..setColor(Colors.red);
+    parent.add(child2);
 
     return super.onLoad();
   }
