@@ -74,7 +74,23 @@ class Shield extends RectangleComponent with Tappable, HasGameRef<MyGame> {
 
 void main() {
   final game = MyGame();
-  runApp(GameWidget(game: game));
+  // runApp(GameWidget(game: game));
+  runApp(const MaterialApp(
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: ClipRect(
+        child: GameWidget(game: MyGame()),
+      ),
+    );
+  }
 }
 
 class MyGame extends FlameGame with HasTappables {
