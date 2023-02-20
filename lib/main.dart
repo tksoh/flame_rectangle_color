@@ -1,12 +1,14 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:window_manager/window_manager.dart';
 
 extension PositionComponentExt on PositionComponent {
   Vector2 relativePositionTo(PositionComponent other) {
@@ -72,9 +74,30 @@ class Shield extends RectangleComponent with Tappable, HasGameRef<MyGame> {
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isWindows) {
+    await windowManager.ensureInitialized();
+
+    const winSize = Size(800, 600);
+    WindowOptions windowOptions = const WindowOptions(
+      size: winSize,
+      minimumSize: winSize,
+      maximumSize: winSize,
+      // center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.normal,
+      // fullScreen: false,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
+
   final game = MyGame();
-  // runApp(GameWidget(game: game));
   runApp(const MaterialApp(
     home: MyApp(),
   ));
@@ -101,6 +124,8 @@ class MyApp extends StatelessWidget {
 class MyGame extends FlameGame with HasTappables {
   @override
   FutureOr<void>? onLoad() {
+    add(Shield());
+
     final center = RectangleComponent(
       position: Vector2(size.x / 2, size.y / 2),
       size: Vector2(50, 50),
