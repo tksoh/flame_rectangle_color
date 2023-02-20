@@ -87,7 +87,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ClipRect(
-        child: GameWidget(game: MyGame()),
+        child: LayoutBuilder(
+          builder: (context, constraint) {
+            debugPrint('layout builder');
+            return GameWidget(game: MyGame());
+          },
+        ),
       ),
     );
   }
@@ -96,6 +101,13 @@ class MyApp extends StatelessWidget {
 class MyGame extends FlameGame with HasTappables {
   @override
   FutureOr<void>? onLoad() {
+    final center = RectangleComponent(
+      position: Vector2(size.x / 2, size.y / 2),
+      size: Vector2(50, 50),
+      anchor: Anchor.center,
+    )..setColor(Colors.orange);
+    add(center);
+
     final parent = RectangleComponent(
       position: Vector2(150, 150),
       size: Vector2(100, 100),
